@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -34,6 +35,21 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   // Create microservice for RabbitMQ events
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [
+        process.env.RABBITMQ_URL || 'amqp://admin:admin123@localhost:5672',
+      ],
+      queue: 'inventory_queue',
+      queueOptions: {
+        durable: true,
+      },
+      // Use the default exchange for event patterns
+      noAck: false,
+      prefetchCount: 1,
+    },
+  });
 
   // Start both HTTP server and microservice
   await app.startAllMicroservices();
