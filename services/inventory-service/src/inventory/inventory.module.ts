@@ -20,7 +20,7 @@ import { RabbitMQModule } from '../rabbitmq/rabbitmq.module';
     ProductsModule,
     RabbitMQModule,
   ],
-  controllers: [InventoryController],
+  controllers: [InventoryController, InventoryService],
   providers: [InventoryService],
   exports: [InventoryService],
 })
