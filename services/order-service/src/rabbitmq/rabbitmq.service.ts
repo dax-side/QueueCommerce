@@ -18,10 +18,10 @@ export class RabbitMQService {
         urls: [
           this.configService.get<string>(
             'RABBITMQ_URL',
-            'amqp://localhost:5672',
+            'amqp://admin:admin123@localhost:5672',
           ),
         ],
-        queue: 'order_queue',
+        queue: 'inventory_queue',
         queueOptions: {
           durable: true,
         },
