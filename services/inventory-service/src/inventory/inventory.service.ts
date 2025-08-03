@@ -3,6 +3,7 @@ import {
   Logger,
   NotFoundException,
   BadRequestException,
+  Controller,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -17,6 +18,7 @@ import { InventoryRabbitMQService } from '../rabbitmq/inventory-rabbitmq.service
 import {
   InventoryReservedEvent,
   InventoryInsufficientEvent,
+  InventoryReservationRequestedEvent,
 } from '../events/inventory-events';
 
 export interface InventoryReservationRequest {
@@ -29,6 +31,7 @@ export interface InventoryReservationRequest {
   }>;
 }
 
+@Controller()
 @Injectable()
 export class InventoryService {
   private readonly logger = new Logger(InventoryService.name);
@@ -43,7 +46,7 @@ export class InventoryService {
 
   @EventPattern('inventory.reservation.requested')
   async handleInventoryReservationRequest(
-    data: InventoryReservationRequest,
+    data: InventoryReservationRequestedEvent,
   ): Promise<void> {
     this.logger.log(
       `🔄 Processing inventory reservation request for order: ${data.orderId}`,
