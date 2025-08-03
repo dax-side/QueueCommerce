@@ -36,10 +36,15 @@ export class OrderCancelledEvent {
 export class InventoryReservationRequestedEvent {
   constructor(
     public readonly orderId: string,
+    public readonly customerId: string,
     public readonly items: Array<{
       productId: string;
+      productName: string;
       quantity: number;
+      unitPrice: number;
     }>,
+    public readonly reservationTimeoutMinutes: number = 15,
+    public readonly timestamp: Date = new Date(),
   ) {}
 }
 
