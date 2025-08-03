@@ -24,9 +24,12 @@ export class OrderEventPublisher {
     await this.requestInventoryReservation(
       new InventoryReservationRequestedEvent(
         event.orderId,
+        event.customerId,
         event.items.map((item) => ({
           productId: item.productId,
+          productName: item.productName,
           quantity: item.quantity,
+          unitPrice: item.unitPrice,
         })),
       ),
     );
