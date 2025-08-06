@@ -48,9 +48,7 @@ export class ProductsService {
     const createdProduct = new this.productModel(productData);
     const savedProduct = await createdProduct.save();
 
-    this.logger.log(
-      `✅ Product created successfully: ${savedProduct.productId}`,
-    );
+    this.logger.log(`Product created successfully: ${savedProduct.productId}`);
     return savedProduct;
   }
 
@@ -123,7 +121,7 @@ export class ProductsService {
     }
 
     this.logger.log(
-      `✅ Product updated successfully: ${updatedProduct.productId}`,
+      `Product updated successfully: ${updatedProduct.productId}`,
     );
     return updatedProduct;
   }
@@ -136,7 +134,7 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
 
-    this.logger.log(`✅ Product removed successfully: ${id}`);
+    this.logger.log(`Product removed successfully: ${id}`);
   }
 
   async updateStock(updateStockDto: UpdateStockDto): Promise<Product> {
@@ -158,7 +156,7 @@ export class ProductsService {
     const updatedProduct = await product.save();
 
     this.logger.log(
-      `✅ Stock updated: ${updateStockDto.productId} (${oldStock} → ${updateStockDto.quantity})`,
+      `Stock updated: ${updateStockDto.productId} (${oldStock} → ${updateStockDto.quantity})`,
     );
 
     // Check if stock is now low and send alert
@@ -192,7 +190,7 @@ export class ProductsService {
     const updatedProduct = await product.save();
 
     this.logger.log(
-      `✅ Stock adjusted: ${productId} (${oldStock} → ${product.stockQuantity})`,
+      `Stock adjusted: ${productId} (${oldStock} → ${product.stockQuantity})`,
     );
 
     // Check if stock is now low and send alert
@@ -232,7 +230,7 @@ export class ProductsService {
       product.isActive
     ) {
       this.logger.warn(
-        `⚠️ Low stock alert for product: ${product.productId} (${product.stockQuantity} remaining)`,
+        `Low stock alert for product: ${product.productId} (${product.stockQuantity} remaining)`,
       );
 
       // Note: Low stock alerting can be implemented via a separate event publisher
