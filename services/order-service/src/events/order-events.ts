@@ -48,6 +48,23 @@ export class InventoryReservationRequestedEvent {
   ) {}
 }
 
+export class PaymentProcessRequestedEvent {
+  constructor(
+    public readonly orderId: string,
+    public readonly customerId: string,
+    public readonly amount: number,
+    public readonly currency: string,
+    public readonly customerEmail: string,
+    public readonly orderItems: Array<{
+      productId: string;
+      productName: string;
+      quantity: number;
+      unitPrice: number;
+    }>,
+    public readonly timestamp: Date = new Date(),
+  ) {}
+}
+
 export class PaymentProcessingRequestedEvent {
   constructor(
     public readonly orderId: string,
