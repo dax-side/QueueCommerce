@@ -49,7 +49,7 @@ export class InventoryService {
     data: InventoryReservationRequestedEvent,
   ): Promise<void> {
     this.logger.log(
-      `🔄 Processing inventory reservation request for order: ${data.orderId}`,
+      `Processing inventory reservation request for order: ${data.orderId}`,
     );
 
     try {
@@ -73,7 +73,7 @@ export class InventoryService {
         );
 
         this.logger.log(
-          `✅ Inventory reserved successfully for order: ${data.orderId}`,
+          `Inventory reserved successfully for order: ${data.orderId}`,
         );
       } else {
         // Some items cannot be reserved
@@ -96,7 +96,7 @@ export class InventoryService {
       }
     } catch (error) {
       this.logger.error(
-        `❌ Error processing inventory reservation for order ${data.orderId}:`,
+        `Error processing inventory reservation for order ${data.orderId}:`,
         error,
       );
 
@@ -206,7 +206,7 @@ export class InventoryService {
         });
 
         this.logger.log(
-          `📦 Reserved ${item.quantity} units of ${item.productId} (${availableQuantity} available)`,
+          `Reserved ${item.quantity} units of ${item.productId} (${availableQuantity} available)`,
         );
       } else {
         insufficientItems.push({
@@ -285,13 +285,11 @@ export class InventoryService {
     reservation.status = ReservationStatus.RELEASED;
     await reservation.save();
 
-    this.logger.log(`✅ Inventory reservation released for order: ${orderId}`);
+    this.logger.log(`Inventory reservation released for order: ${orderId}`);
   }
 
   async confirmReservation(orderId: string): Promise<void> {
-    this.logger.log(
-      `✅ Confirming inventory reservation for order: ${orderId}`,
-    );
+    this.logger.log(`Confirming inventory reservation for order: ${orderId}`);
 
     const reservation = await this.reservationModel
       .findOne({ orderId, status: ReservationStatus.PENDING })
@@ -331,7 +329,7 @@ export class InventoryService {
     reservation.status = ReservationStatus.CONFIRMED;
     await reservation.save();
 
-    this.logger.log(`✅ Inventory reservation confirmed for order: ${orderId}`);
+    this.logger.log(`Inventory reservation confirmed for order: ${orderId}`);
   }
 
   async getReservation(orderId: string): Promise<InventoryReservation | null> {
