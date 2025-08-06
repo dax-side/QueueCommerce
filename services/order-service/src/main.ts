@@ -34,14 +34,14 @@ async function bootstrap() {
     const port = process.env.PORT ?? 3000;
     await app.listen(port);
 
-    logger.log(`🚀 Order Service is running on: http://localhost:${port}`);
-    logger.log(`📚 Swagger documentation: http://localhost:${port}/api`);
-    logger.log(`🐰 RabbitMQ URL: ${process.env.RABBITMQ_URL}`);
+    logger.log(`Order Service is running on: http://localhost:${port}`);
+    logger.log(`Swagger documentation: http://localhost:${port}/api`);
+    logger.log(`RabbitMQ URL: ${process.env.RABBITMQ_URL}`);
     logger.log(
       ` MongoDB URL: ${process.env.DATABASE_URL ? 'Connected' : 'Not configured'}`,
     );
   } catch (error) {
-    logger.error('❌ Failed to start Order Service', error);
+    logger.error('Failed to start Order Service', error);
     process.exit(1);
   }
 }
