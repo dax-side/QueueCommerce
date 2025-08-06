@@ -57,17 +57,17 @@ async function bootstrap() {
   const port = process.env.PORT || 3001;
   await app.listen(port);
 
-  console.log(`🚀 Inventory Service is running on: http://localhost:${port}`);
-  console.log(`📚 Swagger documentation: http://localhost:${port}/api`);
+  console.log(`Inventory Service is running on: http://localhost:${port}`);
+  console.log(`Swagger documentation: http://localhost:${port}/api`);
   console.log(
-    `🐰 RabbitMQ URL: ${process.env.RABBITMQ_URL || 'amqp://admin:admin123@localhost:5672'}`,
+    `RabbitMQ URL: ${process.env.RABBITMQ_URL || 'amqp://admin:admin123@localhost:5672'}`,
   );
   console.log(
-    `📦 MongoDB URL: ${process.env.DATABASE_URL ? 'Connected to Atlas' : 'localhost:27017'}`,
+    `MongoDB URL: ${process.env.DATABASE_URL ? 'Connected to Atlas' : 'localhost:27017'}`,
   );
 }
 
 bootstrap().catch((error) => {
-  console.error('❌ Error starting Inventory Service:', error);
+  console.error('Error starting Inventory Service:', error);
   process.exit(1);
 });
