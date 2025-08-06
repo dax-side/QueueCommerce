@@ -5,7 +5,7 @@ import {
   OrderUpdatedEvent,
   OrderCancelledEvent,
   InventoryReservationRequestedEvent,
-  PaymentProcessingRequestedEvent,
+  PaymentProcessRequestedEvent,
 } from '../events/order-events';
 
 @Injectable()
@@ -35,11 +35,18 @@ export class OrderEventPublisher {
     );
 
     await this.requestPaymentProcessing(
-      new PaymentProcessingRequestedEvent(
+      new PaymentProcessRequestedEvent(
         event.orderId,
         event.customerId,
         event.total,
-        'credit_card', // This would come from the order data
+        'usd', // Default currency
+        'customer@example.com', // This would come from the order data
+        event.items.map((item) => ({
+          productId: item.productId,
+          productName: item.productName,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+        })),
       ),
     );
   }
@@ -71,14 +78,11 @@ export class OrderEventPublisher {
   }
 
   private async requestPaymentProcessing(
-    event: PaymentProcessingRequestedEvent,
+    event: PaymentProcessRequestedEvent,
   ): Promise<void> {
     this.logger.log(
       `Requesting payment processing for order: ${event.orderId}`,
     );
-    await this.rabbitMQService.publishEvent(
-      'payment.processing.requested',
-      event,
-    );
+    await this.rabbitMQService.publishEvent('payment.process.requested', event);
   }
 }
