@@ -44,7 +44,7 @@ async function bootstrap() {
       urls: [
         process.env.RABBITMQ_URL || 'amqp://admin:admin123@localhost:5672',
       ],
-      queue: 'inventory_queue', // Use same queue as inventory service for event sharing
+      queue: 'inventory_queue', // Shared queue for all microservices event communication
       queueOptions: {
         durable: true,
       },
