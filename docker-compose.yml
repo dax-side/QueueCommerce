@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: queuecommerce-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Note: MongoDB Atlas is used for production
+  # Services can be added here for local development if needed
+  
+  # Uncomment below for local MongoDB (optional)
+  # mongodb:
+  #   image: mongo:7
+  #   container_name: queuecommerce-mongo
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: admin
+  #     MONGO_INITDB_ROOT_PASSWORD: admin123
+  #   volumes:
+  #     - mongodb_data:/data/db
+
+volumes:
+  rabbitmq_data:
+  # mongodb_data:
