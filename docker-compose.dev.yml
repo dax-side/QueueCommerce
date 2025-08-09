@@ -3,7 +3,7 @@ version: '3.8'
 services:
   rabbitmq:
     image: rabbitmq:3.12-management
-    container_name: buzzmail-rabbitmq
+    container_name: queuecommerce-rabbitmq
     hostname: rabbitmq
     ports:
       - "5672:5672"      # AMQP port
@@ -15,26 +15,26 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - buzzmail-network
+      - queuecommerce-network
 
   mongodb:
     image: mongo:7.0
-    container_name: buzzmail-mongodb
+    container_name: queuecommerce-mongodb
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
-      MONGO_INITDB_DATABASE: buzzmail-orders
+      MONGO_INITDB_DATABASE: queuecommerce-orders
     volumes:
       - mongodb_data:/data/db
     networks:
-      - buzzmail-network
+      - queuecommerce-network
 
 volumes:
   rabbitmq_data:
   mongodb_data:
 
 networks:
-  buzzmail-network:
+  queuecommerce-network:
     driver: bridge
